@@ -1,0 +1,22 @@
+.bk{height: 200px;
+	background-image: linear-gradient (to right ,#649173,#dbd5a4);
+	height: 200px;width:100%;background-image: linear-gradient(#ece9eb,#ffffff)}
+div img{height: auto;
+	max-width: 100%;
+z-index: 1;}
+.content: {position:relative;}
+.jumbotron{z-index: 10;position: absolute;top: 150px ;left: 50px;right: 50px;
+}
+@media (max-width: 576px) {  
+	.btn{margin-top: 10px;}
+	.btn-info{transform: scale(0.9);}
+	.jumbotron{top: 250px;}
+ 
+}
+@media (max-width: 768px) {  
+ 	.btn{margin-top: 10px;}
+}
+@media (max-width: 414px) {  
+ 	.jumbotron{top: 300px;}
+ 	
+}

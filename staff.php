@@ -57,7 +57,7 @@
       <div class="col-6">  
       <div class="form-group padding">
           <label for="phonenumber"><strong>Phone number:</strong></label>
-           <input type="text" name="phonenumber" value="<?php echo $phonenumber;?>" class="form-control border-gradient" placeholder="Enter phonenumber eg.,254722474999" id="phonenumber" >
+           <input type="text" name="phonenumber" value="<?php echo $phonenumber;?>" class="form-control border-gradient" placeholder="Enter phonenumber eg.,722474999,omit zero" id="phonenumber" >
            <span class="error"> <?php echo $phonenumberErr;?></span>
           <br><br>
       </div>

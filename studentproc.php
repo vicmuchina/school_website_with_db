@@ -19,6 +19,7 @@ $studentnameErr=$studentlastnameErr=$studentemailErr=$studentgenderErr =$admissi
 $studentfirstname=$studentlastname=$studentemail=$studentgender =$admissionnumber="";
 $adm="";
 $em="";
+$stmt="";
 if (isset($_POST["submit"])) {
 	# code...
 	if (empty($_POST["studentfirstname"])) {
@@ -88,16 +89,29 @@ if (isset($_POST["submit"])) {
 
 if (empty($studentnameErr)&& empty($studentlastnameErr) && empty($studentemailErr) && empty($studentgenderErr) && empty($admissionnumberErr)) {
 	# code...
+	$stmt = $conn->prepare("INSERT INTO students (firstname, lastname, email, gender, admission_number) VALUES (?, ?, ?, ?, ?)");
+	$stmt->bind_param("ssssi", $firstname, $lastname, $email, $gender, $admission_number);
 
+	// set parameters and execute
 
-$sql = "INSERT INTO students ( firstname, lastname, email, gender,admission_number)
-VALUES ('$studentfirstname', '$studentlastname', '$studentemail','$studentgender','$admissionnumber')";
+		 $firstname=$studentfirstname;
+		 $lastname=$studentlastname;
+		 $email=$studentemail;
+		 $gender=$studentgender;
+		 $admission_number=$admissionnumber;
 
-if ($conn->query($sql) === TRUE) {
-  echo "New student record created successfully";
-} else {
-  echo "Error: " . $sql . "<br>" . $conn->error;
-}
+		 $stmt->execute();
+		 echo "new student record successfully created";
+		 $stmt->close();
+
+// $sql = "INSERT INTO students ( firstname, lastname, email, gender,admission_number)
+// VALUES ('$studentfirstname', '$studentlastname', '$studentemail','$studentgender','$admissionnumber')";
+
+// if ($conn->query($sql) === TRUE) {
+//   echo "New student record created successfully";
+// } else {
+//   echo "Error: " . $sql . "<br>" . $conn->error;
+// }
 
 
 }else{echo "please input valid details";}

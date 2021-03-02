@@ -18,6 +18,7 @@ $firstname=$lastname=$email=$employeeid=$gender =$salary=$phonenumber="";
 $id="";
 $phn="";
 $em="";
+$stmt="";
 if (isset($_POST["submit"])) {
 	# code...
 	if (empty($_POST["firstname"])) {
@@ -116,14 +117,29 @@ if (isset($_POST["submit"])) {
 
       if (empty($firstnameErr) && empty($lastnameErr) && empty($emailErr) && empty($employeeidErr) && empty($genderErr) && empty($salaryErr) && empty($phonenumberErr) ) {
       	# code...
-      	$sql = "INSERT INTO staff ( firstname, lastname, email, employeeid, gender , salary, phone_number)
-		VALUES ('$firstname', '$lastname', '$email', '$employeeid', '$gender', '$salary', '$phonenumber')";
+  //     	$sql = "INSERT INTO staff ( firstname, lastname, email, employeeid, gender , salary, phone_number)
+		// VALUES ('$firstname', '$lastname', '$email', '$employeeid', '$gender', '$salary', '$phonenumber')";
+		$stmt = $conn->prepare("INSERT INTO staff (firstname, lastname, email, employeeid, gender, salary, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		$stmt->bind_param("sssisii", $firstname, $lastname, $email,$employeeid,$gender,$salary,$phone_number);
+		// set parameters and execute
 
-	  if ($conn->query($sql) === TRUE) {
-		 	 echo "New staff record created successfully";
-		} else {
-  		echo "Error: " . $sql . "<br>" . $conn->error;
-		}
+		 $firstname=$firstname;
+		 $lastname=$lastname;
+		 $email=$email;
+		 $employeeid=$employeeid;
+		 $gender=$gender;
+		 $salary=$salary;
+		 $phone_number=$phonenumber;
+
+		 $stmt->execute();
+		 echo "new staff record successfully created";
+		 $stmt->close();
+
+	 //  if ($conn->query($sql) === TRUE) {
+		//  	 echo "New staff record created successfully";
+		// } else {
+  // 		echo "Error: " . $sql . "<br>" . $conn->error;
+		// }
 
       }else{echo "Please input valid details";}
 

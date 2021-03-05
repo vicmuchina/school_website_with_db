@@ -15,7 +15,7 @@
 <div class="container-fluid">
 <div class="image" ><img src="images/pexels-photo-1595385.jpeg" class="img.fluid"></div> 
 
- <div class="row a" style="margin-left: 5%;margin-right: 5%;">
+ <div class="row a">
   <div class="col-md-4">
   <a href="Page-9.html" id="button" class="btn btn-success btn-lg" role="button" >back to landing page</a>
    </div> 
@@ -27,12 +27,12 @@
   </div>
   </div>  
 
-  <div class="row b" style="margin-left: 5%;margin-right: 5%;"> 
-  <div class="col-md-6">   
+  <div class="row b"> 
+  <div class="col-md-4">   
   <a href="../stafflist.php" class="btn btn-danger btn-lg" role="button">All staffs</a>
    </div>
-  <div class="col-md-6">       
-  <a href="../studentlist.php" class="btn btn-dark btn-lg "role="button">All students</a>
+  <div class="col-md-4">       
+  <a href="../studentlist.php" class="btn btn-dark btn-lg "role="button" id="x" >All students</a>
   </div>
   </div>            
 

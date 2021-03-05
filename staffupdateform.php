@@ -1,4 +1,4 @@
-<?php include 'staffproc.php'?>
+<?php include 'staffupdateproc.php'?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,9 +13,14 @@
 
 </head>
 <body>
-<div class="container container-fluid">
+<div class="container-fluid" >
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method='POST' enctype="multipart/form-data">
   <caption><h2>STAFFS' ENTRY FORM</h2></caption>
+  <div class="row">
+  <div class="col-6">  
+  <input type="hidden" name="id" value="<?php echo $id; ?>">
+    </div>
+  </div>
  <div class="row">
    <div class="col-6">
      <div class="form-group padding">
@@ -83,16 +88,20 @@
             <span class="error"> <?php echo "<br>". $genderErr;?></span>
       </div>
     </div>
-    <div class="col">
+      <div class="col-6">
       <label><strong>staff's passport photo</strong></label>
-      <input type="file" class="form-control" name="passport" id="passport"  placeholder="Staff's passport photo" required="">
+      <input type="file" class="form-control" name="passport" id="passport"  placeholder="Staff's passport photo" value="" required=""><br><br>
+      <img src="staffpassportphotos/<?php echo $passport?>" style="height:100px;width: 100px;">
     </div>
 
     </div>
+
+
     <div class="row">
-    <div class="col-6">
-        <div ><input type="submit" name="submit" value="submit" class="btn btn-lg btn-success border-gradient padding "></div> 
-        </div>
+   <div class="col-6">
+        <div><input type="submit" name="update" value="update" class="btn btn-lg btn-danger">
+        </div> 
+      </div>
   </div>
 </form>
 </div>

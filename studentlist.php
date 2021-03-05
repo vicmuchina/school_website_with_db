@@ -1,6 +1,6 @@
 <?php include "connection.php"?>
 <?php
-$sql="SELECT id, firstname, lastname, email, gender, admission_number FROM students";
+$sql="SELECT id, firstname, lastname, email, gender, admission_number, passport FROM students";
 $result = $conn->query($sql);
 
 ?>	
@@ -28,6 +28,8 @@ $result = $conn->query($sql);
         <th>Email</th>
         <th>Gender</th>
         <th>admissionnumber</th>
+          <th>photo</th>
+        <th colspan="2">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -41,10 +43,35 @@ $result = $conn->query($sql);
         <td><?php echo $row['email']; ?></td>
         <td><?php echo $row['gender']; ?></td>
         <td><?php echo $row['admission_number']; ?></td>
+         <td>
+        <?php echo "<img src='studentspassportphotos/" . $row['passport'] . "'style='width:100px; height:100px;'>" 
+        ?>
+        </td>
+         <td>
+        <a href="studentupdateform.php?edit=<?php echo $row['id'];  ?>" type="button" value="edit" name="edit" class="btn btn-warning">Edit</a>
+        <a href="studentlist.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger" type="button" name="delete">Delete</a>
+        </td>
+
       </tr>
      <?php
  		endwhile;
      ?> 
+
+
+        <?php 
+        if (isset($_GET['delete'])) {
+          # code...
+          $id=$_GET['delete'];
+          $sql="DELETE FROM students WHERE id=$id";
+          $conn->query($sql) or die($conn->error);
+
+          echo "deleted";
+          header('Location: studentlist.php');
+
+        } 
+
+         ?>
+
     </tbody>
   </table>
 </div>

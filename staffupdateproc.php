@@ -1,4 +1,5 @@
 <?php
+
 $servername="localhost";
 $username="root";
 $password="";
@@ -18,13 +19,37 @@ $empid="";
 $phn="";
 $em="";
 $stmt="";
-$id="";
+$idn="";
+$id=0;
 $passport="";
 
-if (isset($_POST["submit"])) {
+
+if (isset($_GET['edit'])) {
 	# code...
-	if (empty($_POST["firstname"])) {
-		# code...
+	$id= $_GET['edit'];
+	// pull requested code
+
+	$sql="SELECT * FROM staff WHERE id=$id ";
+	$result=$conn->query($sql) or die($conn->error);
+	
+	$row=$result->fetch_assoc(); 
+	$firstname=$row["firstname"];
+	$lastname=$row["lastname"];
+	$email=$row["email"];
+	$employeeid=$row["employeeid"];
+	$gender=$row["gender"];
+	$salary=$row["salary"];
+	$phonenumber=$row["phone_number"];
+	$passport=$row["passport"];
+}
+
+if (isset($_POST['update'])) {
+	# code...
+	$id = $_POST['id'];
+
+
+ if (empty($_POST["firstname"])) {
+		#code...
 		$firstnameErr="staff's firstname required";
 	}else{
 		$firstname=$_POST["firstname"];
@@ -72,7 +97,7 @@ if (isset($_POST["submit"])) {
 		$employeeid=filter_var($employeeid, FILTER_SANITIZE_NUMBER_INT);
 		// validate integers
 		if (filter_var($employeeid, FILTER_VALIDATE_INT) === 0 || !filter_var($employeeid, FILTER_VALIDATE_INT) === false) {
-  		$empid="ID is valid";
+  		$idn="ID is valid";
 			} else {
   			$employeeidErr="ID is invalid";
 			}
@@ -108,13 +133,15 @@ if (isset($_POST["submit"])) {
 	}else{
 		$phonenumber=$_POST["phonenumber"];
 		$phonenumber=filter_var($phonenumber, FILTER_SANITIZE_NUMBER_INT);
-		// validate integer
+		// validate integer`
 		if (filter_var($phonenumber, FILTER_VALIDATE_INT) === 0 || !filter_var($phonenumber, FILTER_VALIDATE_INT) === false) {
   		$phn="phonenumber is valid";
 			} else {
   			$phonenumberErr="phonenumber is invalid";
 			}
 	}
+
+
 	//captures users input
 	$passport = $_FILES['passport']['name'];
 	 # code...
@@ -124,45 +151,38 @@ if (isset($_POST["submit"])) {
     move_uploaded_file($temp,$target);
 
 
-
-
-
       if (empty($firstnameErr) && empty($lastnameErr) && empty($emailErr) && empty($employeeidErr) && empty($genderErr) && empty($salaryErr) && empty($phonenumberErr) ) {
       	# code...
   //     	$sql = "INSERT INTO staff ( firstname, lastname, email, employeeid, gender , salary, phone_number)
 		// VALUES ('$firstname', '$lastname', '$email', '$employeeid', '$gender', '$salary', '$phonenumber')";
-		$stmt = $conn->prepare("INSERT INTO staff (firstname, lastname, email, employeeid, gender, salary, phone_number,passport) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-		$stmt->bind_param("sssisiis", $firstname, $lastname, $email,$employeeid,$gender,$salary,$phone_number,$passport);
+		// $stmt = $conn->prepare("INSERT INTO staff (firstname, lastname, email, employeeid, gender, salary, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		// $stmt->bind_param("sssisii", $firstname, $lastname, $email,$employeeid,$gender,$salary,$phone_number);
 		// set parameters and execute
+		 $sql ="UPDATE staff SET firstname='$firstname',lastname='$lastname',
+ 		 email = '$email', employeeid = '$employeeid', gender='$gender', salary='$salary',phone_number='$phonenumber',passport='$passport'  WHERE id='$id'";
 
-		 $firstname=$firstname;
-		 $lastname=$lastname;
-		 $email=$email;
-		 $employeeid=$employeeid;
-		 $gender=$gender;
-		 $salary=$salary;
-		 $phone_number=$phonenumber;
-		 $passport=$passport;
-		 
-		 $stmt->execute();
-		 echo "new staff record successfully created";
-		 $stmt->close();
-		 $conn->close();
+  		$a=$conn->query($sql) or die($conn->error);
+  		if ($a===TRUE) {
+  			# code...
+  			echo "update successful";
+  			header('Location:stafflist.php');
+	
+  		}
+
+
+ 		 
 	 //  if ($conn->query($sql) === TRUE) {
 		//  	 echo "New staff record created successfully";
 		// } else {
   // 		echo "Error: " . $sql . "<br>" . $conn->error;
 		// }
 
-      }else{echo "Please input valid details";}
-
+      }
+      else{echo "Please input valid details";}
 
 
 
 }
-
-
-
 
 
 

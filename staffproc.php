@@ -12,7 +12,7 @@ if($conn->connect_error){
   echo "Connection successful<br>";
 }
 
-$firstnameErr=$lastnameErr=$emailErr=$employeeidErr=$genderErr=$salaryErr =$phonenumberErr="";
+$firstnameErr=$lastnameErr=$emailErr=$employeeidErr=$genderErr=$salaryErr=$passportErr =$phonenumberErr="";
 $firstname=$lastname=$email=$employeeid=$gender =$salary=$phonenumber="";
 $empid="";
 $phn="";
@@ -20,6 +20,7 @@ $em="";
 $stmt="";
 $id="";
 $passport="";
+
 
 if (isset($_POST["submit"])) {
 	# code...
@@ -115,6 +116,12 @@ if (isset($_POST["submit"])) {
   			$phonenumberErr="phonenumber is invalid";
 			}
 	}
+
+
+	if (empty($_FILES['passport']['name'])) {
+		# code...
+		$passportErr="passport required";
+	}else{
 	//captures users input
 	$passport = $_FILES['passport']['name'];
 	 # code...
@@ -123,11 +130,11 @@ if (isset($_POST["submit"])) {
     $temp=$_FILES['passport']['tmp_name'];
     move_uploaded_file($temp,$target);
 
+	}
 
 
 
-
-      if (empty($firstnameErr) && empty($lastnameErr) && empty($emailErr) && empty($employeeidErr) && empty($genderErr) && empty($salaryErr) && empty($phonenumberErr) ) {
+      if (empty($firstnameErr) && empty($lastnameErr) && empty($emailErr) && empty($employeeidErr) && empty($genderErr) && empty($salaryErr) && empty($phonenumberErr) && empty($passportErr) ) {
       	# code...
   //     	$sql = "INSERT INTO staff ( firstname, lastname, email, employeeid, gender , salary, phone_number)
 		// VALUES ('$firstname', '$lastname', '$email', '$employeeid', '$gender', '$salary', '$phonenumber')";
@@ -161,9 +168,15 @@ if (isset($_POST["submit"])) {
 
 }
 
-
+    if (isset($_POST['signout'])) {
+    # code...
+    unset($_SESSION['activeUser']);
+                session_destroy();
+    header('location:../Authentication/Page-9.php');
+    }
 
 
 
 
 ?>
+-

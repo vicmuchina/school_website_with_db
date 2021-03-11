@@ -15,7 +15,7 @@ if($conn->connect_error){
 
 
 
-$studentnameErr=$studentlastnameErr=$studentemailErr=$studentgenderErr =$admissionnumberErr="";
+$studentnameErr=$studentlastnameErr=$studentemailErr=$studentgenderErr=$passportErr =$admissionnumberErr="";
 $studentfirstname=$studentlastname=$studentemail=$studentgender =$admissionnumber="";
 $adm="";
 $em="";
@@ -69,7 +69,7 @@ if (isset($_POST["submit"])) {
 
 	if (empty($_POST["studentgender"])) {
 		# code...
-		$studentgenderErr="student's gender is required";
+		$studentgenderErr="student's g`ender is required";
 	}else{
 		$studentgender=$_POST["studentgender"];
 	}
@@ -89,6 +89,10 @@ if (isset($_POST["submit"])) {
 			}
 	}
 
+	if (empty($_FILES['passport']['name'])) {
+		# code...
+		$passportErr="passport required";
+	}else{
 	//captures users input
 	$passport = $_FILES['passport']['name'];
 	 # code...
@@ -96,10 +100,10 @@ if (isset($_POST["submit"])) {
     $target = "studentspassportphotos/" .basename($_FILES['passport']['name']);	
     $temp=$_FILES['passport']['tmp_name'];
     move_uploaded_file($temp,$target);
+	}
 
 
-
-if (empty($studentnameErr)&& empty($studentlastnameErr) && empty($studentemailErr) && empty($studentgenderErr) && empty($admissionnumberErr)) {
+if (empty($studentnameErr)&& empty($studentlastnameErr) && empty($studentemailErr) && empty($studentgenderErr) && empty($admissionnumberErr) && empty($passportErr)) {
 	# code...
 	$stmt = $conn->prepare("INSERT INTO students (firstname, lastname, email, gender, admission_number, passport) VALUES (?, ?, ?, ?, ?, ?)");
 	$stmt->bind_param("ssssis", $firstname, $lastname, $email, $gender, $admission_number, $passport);
@@ -132,7 +136,6 @@ if (empty($studentnameErr)&& empty($studentlastnameErr) && empty($studentemailEr
 
 
 }
-
 
 
 ?>

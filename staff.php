@@ -1,3 +1,7 @@
+<?php
+session_start();
+
+ ?>
 <?php include 'staffproc.php'?>
 <!DOCTYPE html>
 <html>
@@ -15,7 +19,18 @@
 <body>
 <div class="container container-fluid">
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method='POST' enctype="multipart/form-data">
-  <caption><h2>STAFFS' ENTRY FORM</h2></caption>
+  <caption><h2>STAFFS' ENTRY FORM</h2></caption><br>
+  <h3 style="font-family: 'Comfortaa', cursive">Welcome
+    <?php 
+     echo " ".$_SESSION['activeUser']." ";
+    ?>
+  </h3><br>
+  <div class="row">
+  <div class="col-6">
+    <p style="font-family: 'Comfortaa', cursive">Please fill the form</p>
+  </div>
+  </div>
+  
  <div class="row">
    <div class="col-6">
      <div class="form-group padding">
@@ -85,7 +100,7 @@
     </div>
     <div class="col">
       <label><strong>staff's passport photo</strong></label>
-      <input type="file" class="form-control" name="passport" id="passport"  placeholder="Staff's passport photo" required="">
+      <input type="file" class="form-control" name="passport" id="passport"  placeholder="Staff's passport photo" >
     </div>
 
     </div>
@@ -93,6 +108,20 @@
     <div class="col-6">
         <div ><input type="submit" name="submit" value="submit" class="btn btn-lg btn-success border-gradient padding "></div> 
         </div>
+    <div class="col-6">
+    <div><input type="submit" name="signout" value="signout" class="btn btn-lg btn-info border-gradient padding "></div>
+
+    <?php
+    if (isset($_POST['signout'])) {
+    # code...
+    unset($_SESSION['activeUser']);
+                session_destroy();
+    header('location:../Authentication/Page-9.php');
+    }
+
+    ?>
+   </div>
+   
   </div>
 </form>
 </div>
